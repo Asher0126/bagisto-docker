@@ -74,7 +74,14 @@ if ! docker exec -i ${apache_container_id} bash -lc "ping -c1 -W1 github.com >/d
 fi
 
 # installing composer dependencies inside container
-docker exec -i ${apache_container_id} bash -lc "cd /var/www/html/bagisto && composer install --prefer-dist --no-interaction || composer install --prefer-source --no-interaction"
+if command -v composer >/dev/null 2>&1; then
+  echo "Host composer detected, installing dependencies on host..."
+  composer config -g repos.packagist composer https://mirrors.aliyun.com/composer/ || true
+  (cd ./workspace/bagisto && composer install --prefer-dist --no-interaction) || (cd ./workspace/bagisto && composer install --prefer-source --no-interaction)
+else
+  echo "Host composer not found, installing dependencies inside container..."
+  docker exec -i ${apache_container_id} bash -lc "cd /var/www/html/bagisto && composer install --prefer-dist --no-interaction || composer install --prefer-source --no-interaction"
+fi
 
 cp .configs/.env ./workspace/bagisto/.env
 cp .configs/.env.testing ./workspace/bagisto/.env.testing

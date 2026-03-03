@@ -5,9 +5,9 @@ services:
         uid: ${HOST_UID}
         user: ${HOST_USER}
         container_project_path: /var/www/html/
-        http_proxy: ${HTTP_PROXY}
-        https_proxy: ${HTTPS_PROXY}
-        no_proxy: ${NO_PROXY}
+        http_proxy: ${HTTP_PROXY:-}
+        https_proxy: ${HTTPS_PROXY:-}
+        no_proxy: ${NO_PROXY:-}
       context: .
       dockerfile: ./Dockerfile
     image: bagisto-php-apache
@@ -17,9 +17,9 @@ services:
       - 8.8.8.8
       - 1.1.1.1
     environment:
-      - HTTP_PROXY=${HTTP_PROXY}
-      - HTTPS_PROXY=${HTTPS_PROXY}
-      - NO_PROXY=${NO_PROXY}
+      - HTTP_PROXY=${HTTP_PROXY:-}
+      - HTTPS_PROXY=${HTTPS_PROXY:-}
+      - NO_PROXY=${NO_PROXY:-}
       - COMPOSER_PROCESS_TIMEOUT=2000
     volumes:
       - ./workspace/:/var/www/html/
