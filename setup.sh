@@ -48,6 +48,8 @@ echo "Now, setting up Bagisto..."
 echo "Now, setting up Bagisto stable version..."
 (cd ./workspace/bagisto && git reset --hard 2.3)
 
+docker exec -i ${apache_container_id} bash -lc "composer config -g repos.packagist composer https://mirrors.aliyun.com/composer/"
+
 # DNS check and fallback for GitHub resolution
 if ! docker exec -i ${apache_container_id} bash -lc "ping -c1 -W1 github.com >/dev/null 2>&1"; then
   echo "Container cannot resolve github.com, trying host-side resolution..."
@@ -72,7 +74,7 @@ if ! docker exec -i ${apache_container_id} bash -lc "ping -c1 -W1 github.com >/d
 fi
 
 # installing composer dependencies inside container
-docker exec -i ${apache_container_id} bash -c "cd /var/www/html/bagisto && composer install"
+docker exec -i ${apache_container_id} bash -lc "cd /var/www/html/bagisto && composer install --prefer-dist --no-interaction || composer install --prefer-source --no-interaction"
 
 cp .configs/.env ./workspace/bagisto/.env
 cp .configs/.env.testing ./workspace/bagisto/.env.testing

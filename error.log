@@ -1,19 +1,16 @@
- 197/203 [===========================>]  97%    Failed to download spatie/laravel-responsecache from dist: curl error 6 while downloading https://api.github.com/repos/spatie/laravel-responsecache/zipball/039f8b9c2e2b2d838d0bfce32cfe52cf5d1cb8fc: Could not resolve host: api.github.com
-    Now trying to download from source
-  - Syncing spatie/laravel-responsecache (7.7.2) into cache
-    Failed to download symfony/dom-crawler from dist: curl error 6 while downloading https://api.github.com/repos/symfony/dom-crawler/zipball/71fd6a82fc357c8b5de22f78b228acfc43dee965: Could not resolve host: api.github.com
+    Failed to download symfony/dom-crawler from dist: curl error 7 while downloading https://api.github.com/repos/symfony/dom-crawler/zipball/71fd6a82fc357c8b5de22f78b228acfc43dee965: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
     Now trying to download from source
   - Syncing symfony/dom-crawler (v7.4.4) into cache
-    Failed to download spatie/robots-txt from dist: curl error 6 while downloading https://api.github.com/repos/spatie/robots-txt/zipball/edb91c798ec70583d41c131019da45fa167af5e8: Could not resolve host: api.github.com
+    Failed to download spatie/robots-txt from dist: curl error 7 while downloading https://api.github.com/repos/spatie/robots-txt/zipball/edb91c798ec70583d41c131019da45fa167af5e8: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
     Now trying to download from source
   - Syncing spatie/robots-txt (2.5.3) into cache
-    Failed to download spatie/crawler from dist: curl error 6 while downloading https://api.github.com/repos/spatie/crawler/zipball/67cbd569437d0e35b1332c5f21d009cac8b4a37b: Could not resolve host: api.github.com
+    Failed to download spatie/crawler from dist: curl error 7 while downloading https://api.github.com/repos/spatie/crawler/zipball/67cbd569437d0e35b1332c5f21d009cac8b4a37b: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
     Now trying to download from source
   - Syncing spatie/crawler (8.4.7) into cache
-    Failed to download spatie/laravel-sitemap from dist: curl error 6 while downloading https://api.github.com/repos/spatie/laravel-sitemap/zipball/9ff614d4834ada564aed5ed88507c9e5baab8e51: Could not resolve host: api.github.com
+    Failed to download spatie/laravel-sitemap from dist: curl error 7 while downloading https://api.github.com/repos/spatie/laravel-sitemap/zipball/9ff614d4834ada564aed5ed88507c9e5baab8e51: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
     Now trying to download from source
   - Syncing spatie/laravel-sitemap (7.3.8) into cache
-    Failed to download stevebauman/purify from dist: curl error 6 while downloading https://api.github.com/repos/stevebauman/purify/zipball/3acb5e77904f420ce8aad8fa1c7f394e82daa500: Could not resolve host: api.github.com
+    Failed to download stevebauman/purify from dist: curl error 7 while downloading https://api.github.com/repos/stevebauman/purify/zipball/3acb5e77904f420ce8aad8fa1c7f394e82daa500: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
     Now trying to download from source
   - Syncing stevebauman/purify (v6.3.1) into cache
 
@@ -26,14 +23,14 @@ In Git.php line 478:
   - https://github.com/php-http/discovery.git                                  
     Cloning into bare repository '/root/.cache/composer/vcs/https---github.co  
   m-php-http-discovery.git'...                                                 
-    fatal: unable to access 'https://github.com/php-http/discovery.git/': Cou  
-  ld not resolve host: github.com                                              
+    fatal: unable to access 'https://github.com/php-http/discovery.git/': Fai  
+  led to connect to github.com port 443 after 0 ms: Could not connect to serv  
+  er                                                                           
                                                                                
   - git@github.com:php-http/discovery.git                                      
     Cloning into bare repository '/root/.cache/composer/vcs/https---github.co  
   m-php-http-discovery.git'...                                                 
-    ssh: Could not resolve hostname github.com: Temporary failure in name res  
-  olution                                                                      
+    ssh: connect to host github.com port 22: Network is unreachable            
     fatal: Could not read from remote repository.                              
                                                                                
     Please make sure you have the correct access rights                        
