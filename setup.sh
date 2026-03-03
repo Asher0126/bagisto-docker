@@ -14,6 +14,15 @@ docker-compose build && docker-compose up -d
 apache_container_id=$(docker ps -aqf "name=bagisto-php-apache")
 db_container_id=$(docker ps -aqf "name=bagisto-mysql")
 
+echo "Cloning bagisto on host into ./workspace/bagisto ..."
+mkdir -p ./workspace
+if [ ! -d "./workspace/bagisto/.git" ]; then
+  git clone git@github.com:Asher0126/bagisto.git ./workspace/bagisto
+else
+  echo "Repo already exists, fetching latest..."
+  (cd ./workspace/bagisto && git fetch --all --prune)
+fi
+
 # checking connection
 echo "Please wait... Waiting for MySQL connection..."
 while ! docker exec ${db_container_id} mysql --user=root --password=root -e "SELECT 1" >/dev/null 2>&1; do
@@ -34,18 +43,16 @@ done
 
 # setting up bagisto
 echo "Now, setting up Bagisto..."
-docker exec ${apache_container_id} git clone git@github.com:Asher0126/bagisto.git
 
 # setting bagisto stable version
 echo "Now, setting up Bagisto stable version..."
-docker exec -i ${apache_container_id} bash -c "cd bagisto && git reset --hard 2.3"
+(cd ./workspace/bagisto && git reset --hard 2.3)
 
 # installing composer dependencies inside container
-docker exec -i ${apache_container_id} bash -c "cd bagisto && composer update && composer install"
+docker exec -i ${apache_container_id} bash -c "cd /var/www/html/bagisto && composer install"
 
-# moving `.env` file
-docker cp .configs/.env ${apache_container_id}:/var/www/html/bagisto/.env
-docker cp .configs/.env.testing ${apache_container_id}:/var/www/html/bagisto/.env.testing
+cp .configs/.env ./workspace/bagisto/.env
+cp .configs/.env.testing ./workspace/bagisto/.env.testing
 
 # executing final commands
-docker exec -i ${apache_container_id} bash -c "cd bagisto && php artisan bagisto:install --skip-env-check --skip-admin-creation"
+docker exec -i ${apache_container_id} bash -c "cd /var/www/html/bagisto && php artisan bagisto:install --skip-env-check --skip-admin-creation"
