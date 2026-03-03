@@ -1,3 +1,9 @@
+#!/bin/bash
+
+# export user id and user name
+export HOST_UID=$(id -u)
+export HOST_USER=$(id -un)
+
 # just to be sure that no traces left
 docker-compose down -v
 
@@ -28,14 +34,14 @@ done
 
 # setting up bagisto
 echo "Now, setting up Bagisto..."
-docker exec ${apache_container_id} git clone https://github.com/bagisto/bagisto
+docker exec ${apache_container_id} git clone git@github.com:Asher0126/bagisto.git
 
 # setting bagisto stable version
 echo "Now, setting up Bagisto stable version..."
-docker exec -i ${apache_container_id} bash -c "cd bagisto && git reset --hard v2.3.6"
+docker exec -i ${apache_container_id} bash -c "cd bagisto && git reset --hard 2.3"
 
 # installing composer dependencies inside container
-docker exec -i ${apache_container_id} bash -c "cd bagisto && composer install"
+docker exec -i ${apache_container_id} bash -c "cd bagisto && composer update && composer install"
 
 # moving `.env` file
 docker cp .configs/.env ${apache_container_id}:/var/www/html/bagisto/.env
