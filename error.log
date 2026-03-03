@@ -1,0 +1,63 @@
+ => ERROR [stage-0 16/20] RUN useradd -G www-data,root -u 1000 -d /home/                                                                                                                                                                          0.4s
+------                                                                                                                                                                                                                                                 
+ > [stage-0 16/20] RUN useradd -G www-data,root -u 1000 -d /home/ :                                                                                                                                                                                    
+0.337 Usage: useradd [options] LOGIN                                                                                                                                                                                                                   
+0.337        useradd -D                                                                                                                                                                                                                                
+0.337        useradd -D [options]                                                                                                                                                                                                                      
+0.337                                                                                                                                                                                                                                                  
+0.337 Options:
+0.337       --badname                 do not check for bad names (DEPRECATED)
+0.337   -b, --base-dir BASE_DIR       base directory for the home directory of the
+0.337                                 new account
+0.337       --btrfs-subvolume-home    use BTRFS subvolume for home directory
+0.337   -c, --comment COMMENT         GECOS field of the new account
+0.337   -d, --home-dir HOME_DIR       home directory of the new account
+0.337   -D, --defaults                print or change default useradd configuration
+0.337   -e, --expiredate EXPIRE_DATE  expiration date of the new account
+0.337   -f, --inactive INACTIVE       password inactivity period of the new account
+0.337   -F, --add-subids-for-system   add entries to sub[ud]id even when adding a system user
+0.337   -g, --gid GROUP               name or ID of the primary group of the new
+0.337                                 account
+0.337   -G, --groups GROUPS           list of supplementary groups of the new
+0.337                                 account
+0.337   -h, --help                    display this help message and exit
+0.337   -k, --skel SKEL_DIR           use this alternative skeleton directory
+0.337   -K, --key KEY=VALUE           override /etc/login.defs defaults
+0.337   -m, --create-home             create the user's home directory
+0.337   -M, --no-create-home          do not create the user's home directory
+0.337   -N, --no-user-group           do not create a group with the same name as
+0.337                                 the user
+0.337   -o, --non-unique              allow to create users with duplicate
+0.337                                 (non-unique) UID
+0.337   -p, --password PASSWORD       encrypted password of the new account
+0.337   -r, --system                  create a system account
+0.337   -R, --root CHROOT_DIR         directory to chroot into
+0.337   -P, --prefix PREFIX_DIR       prefix directory where are located the /etc/* files
+0.337   -s, --shell SHELL             login shell of the new account
+0.337   -u, --uid UID                 user ID of the new account
+0.337   -U, --user-group              create a group with the same name as the user
+0.337   -Z, --selinux-user SEUSER     use a specific SEUSER for the SELinux user mapping
+0.337       --selinux-range SERANGE   use a specific MLS range for the SELinux user mapping
+0.337 
+------
+[+] build 0/1
+ ⠙ Image php-fpm Building                                                                                                                                                                                                                          2.9s
+Dockerfile:59
+
+--------------------
+
+  57 |     
+
+  58 |     # adding user
+
+  59 | >>> RUN useradd -G www-data,root -u $uid -d /home/$user $user
+
+  60 |     RUN mkdir -p /home/$user/.composer && \
+
+  61 |         chown -R $user:$user /home/$user
+
+--------------------
+
+failed to solve: process "/bin/sh -c useradd -G www-data,root -u $uid -d /home/$user $user" did not complete successfully: exit code: 2
+
+Please wait... Waiting for MySQL connection...
