@@ -48,6 +48,29 @@ echo "Now, setting up Bagisto..."
 echo "Now, setting up Bagisto stable version..."
 (cd ./workspace/bagisto && git reset --hard 2.3)
 
+# DNS check and fallback for GitHub resolution
+if ! docker exec -i ${apache_container_id} bash -lc "ping -c1 -W1 github.com >/dev/null 2>&1"; then
+  echo "Container cannot resolve github.com, trying host-side resolution..."
+  GITHUB_IP=""
+  API_GITHUB_IP=""
+  if command -v dig >/dev/null 2>&1; then
+    GITHUB_IP=$(dig +short github.com | head -n1)
+    API_GITHUB_IP=$(dig +short api.github.com | head -n1)
+  elif command -v nslookup >/dev/null 2>&1; then
+    GITHUB_IP=$(nslookup github.com | awk '/^Address: /{print $2; exit}')
+    API_GITHUB_IP=$(nslookup api.github.com | awk '/^Address: /{print $2; exit}')
+  else
+    GITHUB_IP=$(ping -c1 github.com 2>/dev/null | awk -F'[()]' '/PING/{print $2}')
+    API_GITHUB_IP=$(ping -c1 api.github.com 2>/dev/null | awk -F'[()]' '/PING/{print $2}')
+  fi
+  if [ -n "$GITHUB_IP" ]; then
+    docker exec -i ${apache_container_id} bash -lc "echo \"$GITHUB_IP github.com\" >> /etc/hosts"
+  fi
+  if [ -n "$API_GITHUB_IP" ]; then
+    docker exec -i ${apache_container_id} bash -lc "echo \"$API_GITHUB_IP api.github.com\" >> /etc/hosts"
+  fi
+fi
+
 # installing composer dependencies inside container
 docker exec -i ${apache_container_id} bash -c "cd /var/www/html/bagisto && composer install"
 
