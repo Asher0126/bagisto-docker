@@ -16,6 +16,8 @@ services:
     dns:
       - 8.8.8.8
       - 1.1.1.1
+      - 114.114.114.114
+      - 223.5.5.5
     environment:
       - HTTP_PROXY=${HTTP_PROXY:-}
       - HTTPS_PROXY=${HTTPS_PROXY:-}

@@ -48,7 +48,7 @@ echo "Now, setting up Bagisto..."
 echo "Now, setting up Bagisto stable version..."
 (cd ./workspace/bagisto && git reset --hard 2.3)
 
-docker exec -i ${apache_container_id} bash -lc "composer config -g repos.packagist composer https://mirrors.aliyun.com/composer/"
+docker exec -i ${apache_container_id} bash -lc "composer config -g repos.packagist composer https://repo.packagist.org"
 
 # DNS check and fallback for GitHub resolution
 if ! docker exec -i ${apache_container_id} bash -lc "ping -c1 -W1 github.com >/dev/null 2>&1"; then
@@ -75,6 +75,24 @@ fi
 
 # installing composer dependencies inside container (force in-container to match PHP/extension set)
 docker exec -i ${apache_container_id} bash -lc "cd /var/www/html/bagisto && composer install --prefer-dist --no-interaction || composer install --prefer-source --no-interaction"
+
+# packagist/mirrors DNS fallback
+for domain in "repo.packagist.org" "mirrors.aliyun.com"; do
+  if ! docker exec -i ${apache_container_id} bash -lc "ping -c1 -W1 $domain >/dev/null 2>&1"; then
+    echo "Container cannot resolve $domain, trying host-side resolution..."
+    DOMAIN_IP=""
+    if command -v dig >/dev/null 2>&1; then
+      DOMAIN_IP=$(dig +short $domain | head -n1)
+    elif command -v nslookup >/dev/null 2>&1; then
+      DOMAIN_IP=$(nslookup $domain | awk '/^Address: /{print $2; exit}')
+    else
+      DOMAIN_IP=$(ping -c1 $domain 2>/dev/null | awk -F'[()]' '/PING/{print $2}')
+    fi
+    if [ -n "$DOMAIN_IP" ]; then
+      docker exec -i ${apache_container_id} bash -lc "echo \"$DOMAIN_IP $domain\" >> /etc/hosts"
+    fi
+  fi
+done
 
 cp .configs/.env ./workspace/bagisto/.env
 cp .configs/.env.testing ./workspace/bagisto/.env.testing
