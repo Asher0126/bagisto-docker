@@ -1,48 +1,42 @@
-    Failed to download symfony/dom-crawler from dist: curl error 7 while downloading https://api.github.com/repos/symfony/dom-crawler/zipball/71fd6a82fc357c8b5de22f78b228acfc43dee965: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
-    Now trying to download from source
-  - Syncing symfony/dom-crawler (v7.4.4) into cache
-    Failed to download spatie/robots-txt from dist: curl error 7 while downloading https://api.github.com/repos/spatie/robots-txt/zipball/edb91c798ec70583d41c131019da45fa167af5e8: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
-    Now trying to download from source
-  - Syncing spatie/robots-txt (2.5.3) into cache
-    Failed to download spatie/crawler from dist: curl error 7 while downloading https://api.github.com/repos/spatie/crawler/zipball/67cbd569437d0e35b1332c5f21d009cac8b4a37b: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
-    Now trying to download from source
-  - Syncing spatie/crawler (8.4.7) into cache
-    Failed to download spatie/laravel-sitemap from dist: curl error 7 while downloading https://api.github.com/repos/spatie/laravel-sitemap/zipball/9ff614d4834ada564aed5ed88507c9e5baab8e51: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
-    Now trying to download from source
-  - Syncing spatie/laravel-sitemap (7.3.8) into cache
-    Failed to download stevebauman/purify from dist: curl error 7 while downloading https://api.github.com/repos/stevebauman/purify/zipball/3acb5e77904f420ce8aad8fa1c7f394e82daa500: Failed to connect to api.github.com port 443 after 0 ms: Could not connect to server
-    Now trying to download from source
-  - Syncing stevebauman/purify (v6.3.1) into cache
+Your requirements could not be resolved to an installable set of packages.
 
- 203/203 [============================] 100%
-In Git.php line 478:
-                                                                               
-  Failed to clone https://github.com/php-http/discovery.git via https, ssh pr  
-  otocols, aborting.                                                           
-                                                                               
-  - https://github.com/php-http/discovery.git                                  
-    Cloning into bare repository '/root/.cache/composer/vcs/https---github.co  
-  m-php-http-discovery.git'...                                                 
-    fatal: unable to access 'https://github.com/php-http/discovery.git/': Fai  
-  led to connect to github.com port 443 after 0 ms: Could not connect to serv  
-  er                                                                           
-                                                                               
-  - git@github.com:php-http/discovery.git                                      
-    Cloning into bare repository '/root/.cache/composer/vcs/https---github.co  
-  m-php-http-discovery.git'...                                                 
-    ssh: connect to host github.com port 22: Network is unreachable            
-    fatal: Could not read from remote repository.                              
-                                                                               
-    Please make sure you have the correct access rights                        
-    and the repository exists.                                                 
-                                                                               
+  Problem 1
+    - Root composer.json requires PHP extension ext-pdo_mysql * but it is missing from your system. Install or enable PHP's pdo_mysql extension.
+  Problem 2
+    - Root composer.json requires enshrined/svg-sanitize ^0.22.0, found enshrined/svg-sanitize[dev-feature/update-codeclimate-id, dev-fix/case-sensitive-attrs, dev-feature/updated-cli, dev-feature/fix-tests, dev-master, dev-fix/31-xss, dev-develop, 0.1.0, ..., 0.21.0] but these do not match your constraint and are therefore not installable. Make sure you either fix the constraint or avoid updating this package to keep the one present in the lock file (enshrined/svg-sanitize[0.22.0]).
+  Problem 3
+    - Root composer.json requires bagisto/laravel-datafaker 2.3.*, found bagisto/laravel-datafaker[dev-master, v1.5.0, 1.x-dev, v2.0.0, ..., 2.2.x-dev] but these do not match your constraint and are therefore not installable. Make sure you either fix the constraint or avoid updating this package to keep the one present in the lock file (bagisto/laravel-datafaker[v2.3.0]).
+  Problem 4
+    - Root composer.json requires laravel/boost ^2.1, found laravel/boost[dev-fix/windows_multiselect, dev-main, dev-bump_deps, dev-php8.5_support, v1.0.0, ..., v1.8.5] but these do not match your constraint and are therefore not installable. Make sure you either fix the constraint or avoid updating this package to keep the one present in the lock file (laravel/boost[v2.1.3]).
+  Problem 5
+    - mpdf/mpdf v8.2.0 requires php ^5.6 || ^7.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 -> your php version (8.3.6) does not satisfy that requirement.
+    - mpdf/mpdf[v8.2.1, ..., v8.2.7] require ext-gd * -> it is missing from your system. Install or enable PHP's gd extension.
+    - Root composer.json requires mpdf/mpdf ^8.2 -> satisfiable by mpdf/mpdf[v8.2.0, ..., v8.2.7].
 
-install [--prefer-source] [--prefer-dist] [--prefer-install PREFER-INSTALL] [--dry-run] [--download-only] [--dev] [--no-suggest] [--no-dev] [--no-autoloader] [--no-progress] [--no-install] [--audit] [--audit-format AUDIT-FORMAT] [-v|vv|vvv|--verbose] [-o|--optimize-autoloader] [-a|--classmap-authoritative] [--apcu-autoloader] [--apcu-autoloader-prefix APCU-AUTOLOADER-PREFIX] [--ignore-platform-req IGNORE-PLATFORM-REQ] [--ignore-platform-reqs] [--] [<packages>...]
-
-
-Warning: require(/var/www/html/bagisto/vendor/autoload.php): Failed to open stream: No such file or directory in /var/www/html/bagisto/artisan on line 18
-
-Fatal error: Uncaught Error: Failed opening required '/var/www/html/bagisto/vendor/autoload.php' (include_path='.:/usr/local/lib/php') in /var/www/html/bagisto/artisan:18
-Stack trace:
-#0 {main}
-  thrown in /var/www/html/bagisto/artisan on line 18
+To enable extensions, verify that they are enabled in your .ini files:
+    - /etc/php/8.3/cli/php.ini
+    - /etc/php/8.3/cli/conf.d/10-opcache.ini
+    - /etc/php/8.3/cli/conf.d/10-pdo.ini
+    - /etc/php/8.3/cli/conf.d/20-calendar.ini
+    - /etc/php/8.3/cli/conf.d/20-ctype.ini
+    - /etc/php/8.3/cli/conf.d/20-curl.ini
+    - /etc/php/8.3/cli/conf.d/20-exif.ini
+    - /etc/php/8.3/cli/conf.d/20-ffi.ini
+    - /etc/php/8.3/cli/conf.d/20-fileinfo.ini
+    - /etc/php/8.3/cli/conf.d/20-ftp.ini
+    - /etc/php/8.3/cli/conf.d/20-gettext.ini
+    - /etc/php/8.3/cli/conf.d/20-iconv.ini
+    - /etc/php/8.3/cli/conf.d/20-intl.ini
+    - /etc/php/8.3/cli/conf.d/20-mbstring.ini
+    - /etc/php/8.3/cli/conf.d/20-phar.ini
+    - /etc/php/8.3/cli/conf.d/20-posix.ini
+    - /etc/php/8.3/cli/conf.d/20-readline.ini
+    - /etc/php/8.3/cli/conf.d/20-shmop.ini
+    - /etc/php/8.3/cli/conf.d/20-sockets.ini
+    - /etc/php/8.3/cli/conf.d/20-sysvmsg.ini
+    - /etc/php/8.3/cli/conf.d/20-sysvsem.ini
+    - /etc/php/8.3/cli/conf.d/20-sysvshm.ini
+    - /etc/php/8.3/cli/conf.d/20-tokenizer.ini
+    - /etc/php/8.3/cli/conf.d/20-zip.ini
+You can also run `php --ini` in a terminal to see which files are used by PHP in CLI mode.
+Alternatively, you can run Composer with `--ignore-platform-req=ext-pdo_mysql --ignore-platform-req=ext-gd` to temporarily ignore these required extensions.
